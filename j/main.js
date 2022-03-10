@@ -1,13 +1,20 @@
-document.addEventListener('DOMContentLoaded', init);
- 
+ document.addEventListener('DOMContentLoaded', init);
+
+
 function init() {
   //create shortcut vars
-  const back_btn = document.querySelector(".back-btn");
-  const next_btn = document.querySelector(".next-btn");
-  const frame = document.querySelector(".frame");
-  const slides = frame.querySelectorAll("img");
+  const back_btn = document.getElementsByClassName("prev")[0];
+  const next_btn = document.getElementsByClassName("next")[0];
+  const frame1 = document.querySelector(".frame1");
+  const frame2 = document.querySelector(".frame2");
+  const slides = frame2.querySelectorAll(".slide2");
   const caption = document.querySelector(".caption");
-  const controls = document.querySelector(".controls");
+  
+  //const controls = document.querySelector(".controls");
+
+
+  frame1.classList.add("hide_frame");
+  frame2.classList.add("appearance_frame");
 
   //with JS active, hide all images
   slides.forEach((slide) => {
@@ -22,10 +29,10 @@ function init() {
    back_btn.addEventListener("click", changeSlide);
 
    // set the caption dynamically
-   caption.innerHTML = frame.firstElementChild.alt;
+   caption.innerHTML = frame2.firstElementChild.alt;
 
    //show the controls
-   controls.style.display = "block";
+   //controls.style.display = "block";
 }
 
 function getTime() {
@@ -40,21 +47,21 @@ function changeSlide(e) {
 
     // stop link from trying to reload page
     if (e) e.preventDefault();
-    else if (getTime() - counter < 5) return;
+    else if (getTime() - counter < 3) return;
     
     //shortcut vars
-    const frame = document.querySelector(".frame");
-    const slides = frame.querySelectorAll("img");
+    const frame = document.querySelector(".frame2");
+    const slides = frame.querySelectorAll(".slide2");
     const caption = document.querySelector(".caption");
     let showing = document.querySelector(".current");
     let nextUp = "";
   
     if (e) {
-      if(e.target.className == 'next-btn') {
+      if(e.currentTarget.className.includes('next')) {
         nextUp = showing.nextElementSibling;
       }
     
-      if(e.target.className == 'back-btn') {
+      if(e.currentTarget.className.includes('prev')) {
         nextUp = showing.previousElementSibling;
       }
 
@@ -82,4 +89,4 @@ function changeSlide(e) {
 
     //change caption text
     caption.innerHTML = nextUp.alt;
-  }
+  } 
